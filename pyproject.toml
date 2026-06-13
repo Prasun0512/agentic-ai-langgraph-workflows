@@ -1,0 +1,8 @@
+[project]
+name = "agentic-ai-langgraph-workflows"
+version = "0.1.0"
+description = "Agentic AI workflow orchestration patterns inspired by LangGraph."
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
