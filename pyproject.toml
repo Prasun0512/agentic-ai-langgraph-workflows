@@ -4,5 +4,9 @@ version = "0.1.0"
 description = "Agentic AI workflow orchestration patterns inspired by LangGraph."
 requires-python = ">=3.10"
 
+[project.optional-dependencies]
+agentic = ["langgraph>=0.2.0", "langchain-core>=0.3.0"]
+dev = ["pytest>=8.0.0"]
+
 [tool.pytest.ini_options]
 pythonpath = ["."]
