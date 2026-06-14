@@ -33,7 +33,8 @@ flowchart LR
 ## Tech Stack
 
 - Python 3.10+
-- LangGraph-style orchestration pattern
+- LangGraph `StateGraph` implementation with optional dependency install
+- Dependency-light local graph runner for offline demos and tests
 - LangChain-ready tool abstraction
 - Typed state and audit events
 - Pytest-compatible tests
@@ -43,26 +44,46 @@ flowchart LR
 ```bash
 python -m src.demo
 python -m unittest discover -s tests
+docker compose up --build
 ```
 
 ## Included POC Code
 
 - Local graph runner with typed `AgentState`
+- Optional LangGraph workflow in `src/langgraph_workflow.py`
+- Planner, research, retrieval, validator, execution, and human approval nodes
 - Intent classification, risk scoring, retrieval, approval gates, and case creation
 - Sample requests in `examples/requests.json`
 - Unit tests covering knowledge search, human review, and successful case creation
+
+## Engineering Maturity
+
+- Dockerfile and `docker-compose.yml` for local execution
+- GitHub Actions workflow for unit tests
+- `.env.example` for safe configuration hygiene
+- Production readiness notes in `docs/production-readiness.md`
+- Security, monitoring, cost, retry, and scalability considerations documented
+
+## Run With LangGraph
+
+```bash
+pip install -e .[agentic]
+python -c "from src.langgraph_workflow import run_langgraph_demo; print(run_langgraph_demo('create policy-backed support case'))"
+```
 
 ## What This Demonstrates
 
 - Agentic AI workflow design
 - Multi-step routing and tool invocation
 - Human-in-the-loop approval gates
+- Retry/cost/audit state fields for production agent governance
 - Production-safe audit trace generation
 - Clean code structure for extending into LangGraph/LangChain
 
 ## Production Extensions
 
-- Replace local graph runner with LangGraph `StateGraph`
 - Add LangChain tools for CRM, HRIS, or ticketing systems
 - Add Azure OpenAI function/tool calling
 - Add durable state storage and async queue processing
+- Persist state checkpoints in PostgreSQL or Redis
+- Add OpenTelemetry spans for each agent node

@@ -1,0 +1,7 @@
+services:
+  agentic-workflows:
+    build: .
+    environment:
+      APP_ENV: local
+      LOG_LEVEL: INFO
+    command: python -m src.demo
