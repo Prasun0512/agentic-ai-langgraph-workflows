@@ -45,6 +45,13 @@ python -m src.demo
 python -m unittest discover -s tests
 ```
 
+## Included POC Code
+
+- Local graph runner with typed `AgentState`
+- Intent classification, risk scoring, retrieval, approval gates, and case creation
+- Sample requests in `examples/requests.json`
+- Unit tests covering knowledge search, human review, and successful case creation
+
 ## What This Demonstrates
 
 - Agentic AI workflow design

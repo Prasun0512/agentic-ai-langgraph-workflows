@@ -1,0 +1,14 @@
+[
+  {
+    "request": "Search HR policy for leave eligibility",
+    "expected_route": "knowledge_search"
+  },
+  {
+    "request": "Create support case for customer access issue",
+    "expected_route": "case_created"
+  },
+  {
+    "request": "Create urgent claim case with medical attachment",
+    "expected_route": "review_queue"
+  }
+]
