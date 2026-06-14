@@ -71,6 +71,7 @@ docker compose up --build
 - Planner, research, retrieval, validator, execution, and human approval nodes
 - Intent classification, risk scoring, retrieval, approval gates, and case creation
 - Sample requests in `examples/requests.json`
+- Sample execution trace in `examples/sample_execution_trace.json`
 - Unit tests covering knowledge search, human review, and successful case creation
 
 ## Engineering Maturity
@@ -79,7 +80,10 @@ docker compose up --build
 - GitHub Actions workflow for unit tests
 - `.env.example` for safe configuration hygiene
 - Architecture overview in `docs/architecture.md`
+- Evaluation strategy in `docs/evaluation.md`
+- LangGraph design notes in `docs/langgraph-vs-simple-workflow.md`
 - Production readiness notes in `docs/production-readiness.md`
+- Security and privacy guidance in `docs/security-and-privacy.md`
 - Security and governance guidance in `docs/security-and-governance.md`
 - Production readiness notes in `docs/production-readiness.md`
 - Security, monitoring, cost, retry, and scalability considerations documented

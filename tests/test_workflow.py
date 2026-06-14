@@ -1,6 +1,6 @@
 import unittest
 
-from src.workflow import run_workflow
+from src.workflow import AgentState, execute_with_retry, run_workflow
 
 
 class WorkflowTests(unittest.TestCase):
@@ -21,6 +21,16 @@ class WorkflowTests(unittest.TestCase):
         self.assertEqual(state.next_action, "case_created")
         self.assertIn("case_id", state.tool_results)
         self.assertIn("tool:create_case", state.audit)
+
+    def test_failed_tool_retries_and_routes_to_review(self) -> None:
+        def failing_tool(state: AgentState) -> AgentState:
+            raise RuntimeError("simulated outage")
+
+        state = execute_with_retry(failing_tool, AgentState("create support case"), max_attempts=2)
+
+        self.assertEqual(state.next_action, "review_queue")
+        self.assertIn("retry:exhausted", state.audit)
+        self.assertIn("route:human_review", state.audit)
 
 
 if __name__ == "__main__":

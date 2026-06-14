@@ -1,0 +1,15 @@
+{
+  "request": "create support case for customer access issue",
+  "intent": "case_creation",
+  "risk_level": "medium",
+  "approved": true,
+  "next_action": "case_created",
+  "audit": [
+    "classified:case_creation",
+    "risk:medium",
+    "validated:case_payload",
+    "retry:attempt:1",
+    "tool:create_case"
+  ],
+  "notes": "Synthetic trace showing routing, validation, retry wrapper, execution, and auditability."
+}

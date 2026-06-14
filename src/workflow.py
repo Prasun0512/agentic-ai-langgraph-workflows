@@ -138,6 +138,26 @@ def human_review(state: AgentState) -> AgentState:
     return state
 
 
+def execute_with_retry(tool: Tool, state: AgentState, max_attempts: int = 2) -> AgentState:
+    """Run a workflow tool with bounded retry and auditable failure context."""
+    if max_attempts <= 0:
+        raise ValueError("max_attempts must be positive")
+
+    last_error = ""
+    for attempt in range(1, max_attempts + 1):
+        try:
+            state.audit.append(f"retry:attempt:{attempt}")
+            return tool(state)
+        except Exception as exc:  # pragma: no cover - exercised through tests
+            last_error = str(exc)
+            state.audit.append(f"retry:failed:{attempt}:{last_error}")
+
+    state.result = f"Tool failed after {max_attempts} attempt(s). Routed to human review."
+    state.next_action = "human_review"
+    state.audit.append("retry:exhausted")
+    return human_review(state)
+
+
 class AgentWorkflow:
     """Small local graph runner that mirrors LangGraph-style node routing."""
 
@@ -162,7 +182,7 @@ class AgentWorkflow:
         if state.intent == "case_creation":
             state = self.nodes["validate_case"](state)
             if state.approved:
-                return self.nodes["create_case"](state)
+                return execute_with_retry(self.nodes["create_case"], state, max_attempts=2)
             return self.nodes["human_review"](state)
 
         return self.nodes["human_review"](state)
