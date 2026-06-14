@@ -78,6 +78,9 @@ docker compose up --build
 - Dockerfile and `docker-compose.yml` for local execution
 - GitHub Actions workflow for unit tests
 - `.env.example` for safe configuration hygiene
+- Architecture overview in `docs/architecture.md`
+- Production readiness notes in `docs/production-readiness.md`
+- Security and governance guidance in `docs/security-and-governance.md`
 - Production readiness notes in `docs/production-readiness.md`
 - Security, monitoring, cost, retry, and scalability considerations documented
 
