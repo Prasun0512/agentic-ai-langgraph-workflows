@@ -14,6 +14,23 @@ Enterprise AI agents need more than a single prompt. They need controlled tool
 access, stateful workflows, review gates, retry paths, and auditable decisions.
 This repository demonstrates those production patterns in a clean Python codebase.
 
+## Architecture Decisions and Tradeoffs
+
+- **Decision:** Use graph-based orchestration for planner, research, retrieval,
+  validation, execution, and approval nodes.
+- **Tradeoff:** A graph adds design overhead compared with a single agent loop,
+  but it makes state, approvals, retries, and audit events explicit.
+- **Expected scale:** Designed as a reference pattern for queue-backed enterprise
+  workflows where requests may pause for human approval or retry external tools.
+- **Cost strategy:** Track cost units per node, use smaller models for routing,
+  and reserve premium LLM calls for complex reasoning or generation steps.
+- **Security strategy:** Restrict tools per node, validate state before writes,
+  and require human approval for high-risk actions.
+- **Operational strategy:** Emit audit events per node, persist checkpoints in
+  production, and monitor retry count, review rate, latency, and failure reasons.
+- **Lessons learned:** Agentic AI needs workflow engineering and governance as
+  much as model integration.
+
 ## Architecture
 
 ```mermaid
